@@ -1,6 +1,6 @@
 <snippet>
   <content>
-# ${1:Project Name}
+# BlackList Lookup
 
   Performs DNS lookup from public DNS Blacklist services. <br>
   Parses return responce and generates table of repsonces
