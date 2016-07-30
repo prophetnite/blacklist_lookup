@@ -35,8 +35,9 @@ Creds to [Marzavec](https://github.com/marzavec) for the base Node.JS app.
 ## TODO
 -PHP<br>
   replace table with return array<br>
-  generate seperate php to create table from array <br>
--Node.JS<br><br>
+  generate seperate php to create table from array <br><br>
+-Node.JS<br>
+  Delete everything
 
 ## License
 
