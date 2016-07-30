@@ -16,35 +16,36 @@
         Kick raf in the balls for refering to my code like Stam
 */
 
+/*
 if ( isset($argv[1]) ) { $ip = $argv[1];
 } elseif ( isset($_POST['server']) ) { $ip = $_POST['server'];
 } else {$ip = "69.30.196.250";}
+*/
 
-//#$ip = ($_POST['server']) ? $_POST['server'] : '69.30.196.250';
-//$ip = ($argv[1]) ? $argv[1] : '69.30.196.250';
+// Determine IP to lookup, argv[1], $_POST[server] or test IP
+$ip = ($argv[1]) ? $argv[1] : isset($_POST['server']) ? $_POST['server'] : '69.30.196.250';
 
-echo "<b>IP: " . $ip . "</b><br><br>";
-
+    echo "<b>IP: " . $ip . "</b><br><br>";
     $table = "<table border=1>";
-    $table .= "<tr><th>BLACKLIST</th>    <th>RESPONCE</th></tr>";
+    $table .= "<tr><th>BLACKLIST</th>    <th>QUERY</th>    <th>RESPONCE</th></tr>";
 
 $blist=[
-    array("blist_server" => "dnsbl.httpbl.org", "apikey" => "ucsxlknhmfpt." ),
-    array("blist_server" => "cbl.abuseat.org", "apikey" => "" ),
-    array("blist_server" => "dnsbl.sorbs.net", "apikey" => "" ),
-    array("blist_server" => "bl.spamcop.net", "apikey" => "" ),
-    array("blist_server" => "zen.spamhaus.org", "apikey" => "" ),
-    array("blist_server" => "combined.njabl.org", "apikey" => "" )
+    ["blist_server" => "dnsbl.httpbl.org", "apikey" => "ucsxlknhmfpt." ],
+    ["blist_server" => "cbl.abuseat.org", "apikey" => "" ],
+    ["blist_server" => "dnsbl.sorbs.net", "apikey" => "" ],
+    ["blist_server" => "bl.spamcop.net", "apikey" => "" ],
+    ["blist_server" => "zen.spamhaus.org", "apikey" => "" ],
+    ["blist_server" => "combined.njabl.org", "apikey" => "" ]
 ];
 
 foreach ($blist as &$blist_item) {
 
     $lookup = $blist_item["apikey"] . implode('.', array_reverse(explode ('.', $ip ))) . '.' . $blist_item["blist_server"];
-    echo $lookup . "<br>"; // FOR TESTING
     $result = explode( '.', gethostbyname($lookup));  // Perform actual lookup
-    
+
     if ($result[0] == 127 && $result[3] != 0) {
-    // If result POSITIVE (127) and NOT a search engine 
+    // If result POSITIVE (127) and NOT a search engine
+
         $activity = $result[1];		// Days since last activity
         $threat = $result[2];		// Threat score
         $type = $result[3];		// Search engine, suspicious, harvester or comment spammer
@@ -56,11 +57,12 @@ foreach ($blist as &$blist_item) {
 	$typemeaning = trim($typemeaning,', ');
 
         $responce =  "IP seems to belong to a $typemeaning ($type) with threat level $threat" . "<br>";
-        $table .= "<tr><td>" . $blist_item["blist_server"] . "</td><td>" . $responce . "</td></tr>";
+        $table .= "<tr><td>" . $blist_item["blist_server"] . "</td><td>" . $lookup . "</td><td>" . $responce . "</td></tr>";
 
         
     } elseif ($result[0] == 127 && $result[3] == 0) {
     // If result is TRUE for SearchEngine
+
         $activity = $result[1];		// Days since last activity
         $serial = $result[2];		// Search Engine Serial
         $type = $result[3];		// Search engine, should = 0 only
@@ -84,12 +86,12 @@ foreach ($blist as &$blist_item) {
 	$searchEngine = $engines[$serial];
 
         $responce = "IP seems to belong to a $typemeaning ($type) with serial $serial, $searchEngine" . "<br>";
-        $table .= "<tr><td>" . $blist_item["blist_server"] . "</td><td>" . $responce . "</td></tr>";
+        $table .= "<tr><td>" . $blist_item["blist_server"] . "</td><td>" . $lookup . "</td><td>" . $responce . "</td></tr>";
 
     } else {
     // If no result found or nxdomain
         $responce = "IP no responce" . "<br>";
-        $table .= "<tr><td>" . $blist_item["blist_server"] . "</td><td>" . $responce . "</td></tr>";
+        $table .= "<tr><td>" . $blist_item["blist_server"] . "</td><td>" . $lookup . "</td><td>" . $responce . "</td></tr>";
     }
 
 }
