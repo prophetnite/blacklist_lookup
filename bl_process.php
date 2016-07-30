@@ -13,6 +13,7 @@
         Generate seperate php to create table from array
         Generate proper responces from each blacklist, they differ :(
         Fix $_POST[server] VS $argv[1], its just sloppy
+        Kick raf in the balls for refering to my code like Stam
 */
 
 if ( isset($argv[1]) ) { $ip = $argv[1];
@@ -27,14 +28,14 @@ echo "<b>IP: " . $ip . "</b><br><br>";
     $table = "<table border=1>";
     $table .= "<tr><th>BLACKLIST</th>    <th>RESPONCE</th></tr>";
 
-$blist=array(
-    array("blist_server" => "dnsbl.httpbl.org", 	"apikey" => "ucsxlknhmfpt." ),
-    array("blist_server" => "cbl.abuseat.org", 		"apikey" => "" ),
-    array("blist_server" => "dnsbl.sorbs.net", 		"apikey" => "" ),
-    array("blist_server" => "bl.spamcop.net", 		"apikey" => "" ),
-    array("blist_server" => "zen.spamhaus.org", 	"apikey" => "" ),
-    array("blist_server" => "combined.njabl.org", 	"apikey" => "" )
-);
+$blist=[
+    array("blist_server" => "dnsbl.httpbl.org", "apikey" => "ucsxlknhmfpt." ),
+    array("blist_server" => "cbl.abuseat.org", "apikey" => "" ),
+    array("blist_server" => "dnsbl.sorbs.net", "apikey" => "" ),
+    array("blist_server" => "bl.spamcop.net", "apikey" => "" ),
+    array("blist_server" => "zen.spamhaus.org", "apikey" => "" ),
+    array("blist_server" => "combined.njabl.org", "apikey" => "" )
+];
 
 foreach ($blist as &$blist_item) {
 
@@ -65,24 +66,22 @@ foreach ($blist as &$blist_item) {
         $type = $result[3];		// Search engine, should = 0 only
 
         if ($type == 0) $typemeaning .= 'Search Engine'; // condition not required, for uniformity only
-        //if ($type == 1) $typemeaning .= 'Suspicious';
-        //if ($type == 2) $typemeaning .= 'Harvester';
-        //if ($type == 4) $typemeaning .= 'Comment Spammer';
+	
+	$engines = ["Undocumented",
+	             "AltaVista",
+                     "Ask",
+                     "Baidu",
+                     "Excite",
+                     "Google",
+                     "Looksmart",
+                     "Lycos",
+                     "MSN",
+                     "Yahoo",
+                     "Cuil",
+                     "Infoseek",
+                     "Misc"];
 
-	if ($serial == 0) $searchEngine .= 'undocumented, ';
-	if ($serial == 1) $searchEngine .= 'AltaVista, ';
-	if ($serial == 2) $searchEngine .= 'Ask, ';
-	if ($serial == 3) $searchEngine .= 'Baidu, ';
-	if ($serial == 4) $searchEngine .= 'Excite, ';
-	if ($serial == 5) $searchEngine .= 'Google, ';
-	if ($serial == 6) $searchEngine .= 'Looksmart, ';
-	if ($serial == 7) $searchEngine .= 'Lycos, ';
-	if ($serial == 8) $searchEngine .= 'MSN, ';
-	if ($serial == 9) $searchEngine .= 'Yahoo, ';
-	if ($serial == 10) $searchEngine .= 'Cuil, ';
-	if ($serial == 11) $searchEngine .= 'InfoSeek, ';
-	if ($serial == 12) $searchEngine .= 'Misc, ';
-	$searchEngine = trim($searchEngine,', ');
+	$searchEngine = $engines[$serial];
 
         $responce = "IP seems to belong to a $typemeaning ($type) with serial $serial, $searchEngine" . "<br>";
         $table .= "<tr><td>" . $blist_item["blist_server"] . "</td><td>" . $responce . "</td></tr>";
