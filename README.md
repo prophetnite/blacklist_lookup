@@ -8,11 +8,13 @@
 
 ## Installation
 
-Place PHP files into any PHP HTTP server.  No special setup required.
+PHP: Place PHP files into any PHP HTTP server.  No special setup required.<br>
+Node: Serve node.js files as normal.  
 
 ## Usage
 
-Call from webserver or shell # 'php bl_lookup.php [ip]'
+PHP: Call from webserver or shell # 'php bl_lookup.php [ip]'<br>
+Node: 
 
 ## Contributing
 
@@ -28,12 +30,14 @@ TODO: Write history
 
 ## Credits
 
-TODO: Write credits
+<a href="https://github.com/marzavec">Marzavec</a> for the base Node.JS app.
 
-## TODO
+## TODO - PHP
 
   replace table with return array<br>
   generate seperate php to create table from array 
+
+## TODO - Node.JS
 
 ## License
 
