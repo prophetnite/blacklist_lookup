@@ -30,14 +30,13 @@ TODO: Write history
 
 ## Credits
 
-<a href="https://github.com/marzavec">Marzavec</a> for the base Node.JS app.
+Creds to [Marzavec](https://github.com/marzavec) for the base Node.JS app.
 
-## TODO - PHP
-
+## TODO
+-PHP<br>
   replace table with return array<br>
-  generate seperate php to create table from array 
-
-## TODO - Node.JS
+  generate seperate php to create table from array <br>
+-Node.JS<br><br>
 
 ## License
 
